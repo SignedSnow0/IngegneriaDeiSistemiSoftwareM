@@ -7,7 +7,6 @@ import org.junit.Test;
 import main.java.conway.domain.Cell;
 import main.java.conway.domain.Grid;
 
-
 public class GridTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testGrid() throws Exception {

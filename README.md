@@ -1,5 +1,5 @@
 # issLab2026
- Laboratorio di <b>Ingegneria dei Sistemi Software</b> a.a. 2025/2026 di Marchini Claudio 0001240407
+ Laboratorio di <b>Ingegneria dei Sistemi Software</b> a.a. 2025/2026 di Marchini Claudio 0001240407\
  Documentazione disponibile [qui](https://signedsnow0.github.io/IngegneriaDeiSistemiSoftwareM/)
 
  [Testo di riferimento:](https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf)

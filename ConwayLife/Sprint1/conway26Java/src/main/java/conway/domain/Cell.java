@@ -13,6 +13,8 @@ public class Cell implements ICell {
 	public void setStatus(boolean status) { alive = status; }
 	@Override
 	public boolean isAlive() { return alive; }
+	@Override
+	public void switchCellState() { alive = !alive; }
 	
 	private boolean alive;
 }

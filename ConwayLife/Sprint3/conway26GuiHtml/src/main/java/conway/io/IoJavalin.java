@@ -36,7 +36,7 @@ public class IoJavalin implements IOutDev {
 		}).start(8080);
         
         app.get("/", ctx -> {
-    		Path path = Path.of("./src/main/resources/page/ConwayInOutPage.html");   
+    		Path path = Path.of("/conway26GuiHtml-1.0/lib/conway26GuiHtml-1.0.jar/page/ConwayInOutPage.html");   
 		    if (Files.exists(path)) {
 		        // Usiamo Files.newInputStream che è più moderno di FileInputStream
 		        ctx.contentType("text/html").result(Files.newInputStream(path));

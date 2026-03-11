@@ -16,5 +16,4 @@ public class MainConwayGui  {
 	   // app.configureTheSystemWithHtmlWs(true);
 	    System.out.println("MainConway | ENDS " );  
     }
-
 }

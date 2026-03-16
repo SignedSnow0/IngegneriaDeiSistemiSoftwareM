@@ -38,7 +38,7 @@ public class CallerServerWs  {
     	HttpClient client = HttpClient.newHttpClient();
         
         WebSocket webSocket = client.newWebSocketBuilder()
-            .buildAsync(URI.create("ws://localhost:8080/chat"), new WebSocketListener(latch))
+            .buildAsync(URI.create("ws://localhost:8080/eval"), new WebSocketListener(latch))
             .join();
         
         latch.await();

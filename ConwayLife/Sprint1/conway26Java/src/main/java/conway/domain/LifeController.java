@@ -126,4 +126,8 @@ public class LifeController implements GameController {
 		return epoch;
 	}
 
+	@Override
+	public LifeInterface getLife() {
+		return life;
+	}
 }

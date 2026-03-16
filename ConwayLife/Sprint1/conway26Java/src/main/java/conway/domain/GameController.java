@@ -7,4 +7,5 @@ public interface GameController {
 	 void onStop();
 	 void onClear();
 	 int numEpoch();
+	 LifeInterface getLife();
 }

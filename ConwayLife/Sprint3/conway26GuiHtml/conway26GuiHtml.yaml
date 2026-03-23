@@ -6,11 +6,11 @@ services:
     image: gui26html:1.0
     ports:
       - 8080:8080/tcp 
-    networks:
-      - iss-network
+##    networks:
+##      - iss-network
 
-networks:
-  iss-network:
-    external: true
+##networks:
+##  iss-network:
+##    external: true
 
 ## docker-compose -f conway26Guihtml.yaml  up down

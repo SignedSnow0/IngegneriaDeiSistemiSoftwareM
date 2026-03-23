@@ -8,12 +8,12 @@
 -->
     
 </head>   
-<title>conway26Java_v0</title>
+<title>conway26GuiHtml_v0</title>
 </head>
 
 <body>
 <div id="top">
-<h1>ConwayLife Sprint1</h1>
+<h1>ConwayLife Sprint3</h1>
 </div>  
 
 <div class="body">  
@@ -24,36 +24,29 @@ Realizzazione in Java del
  
 <h2>Requirements</h2>
 <pre>
-    Realizzare una versione in Java del gioco Life di Conway, come gioco zero-player. 
-    Il gioco consiste nell’introdurre una Griglia di Celle il cui stato (cella ‘viva’ o cella ‘morta’) 
-    evolve come stabilito dallle regole di ConwayLife
-
-    L’utente umano deve poter:
-     - specificare la configurazione iniziale della griglia del gioco	
-     - vedere l’evoluzione del gioco in forma opportuna 
-        (si veda <a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#section.6.3'>Problema della vista del gioco</a> )
-     - fermare e far ripartire l’evoluzione del gioco
-     - pulire (a gioco fermo) la configurazione della griglia del gioco
-
+<li>Il sistema deve disporre di una gui</li>
+<li>La gui deve essere una accessibile da un web browser</li>
+<li>Il sistema deve poter aggiornare continuamente lo stato della griglia</li>
+<li>Il primo utente connesso è l'unico che può interagire col sistema</li>
+<li>Il sistema deve essere contenuto in un'immagine docker</li>
 </pre>
 
 <h2>Requirement analysis</h2>
 <pre>
-La cella ha uno stato (viva o morta) ottenibile e impostabile con gli opportuni accessori: <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/ICell.java">interfaccia</a>
-La griglia è un insieme di celle, con dimensioni specificabili, e con accessori per ottenere e impostare lo stato di ogni cella: <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/IGrid.java">interfaccia</a>
-Life è un sistema che si occupa di far evolvere la griglia secondo le regole del gioco: <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/LifeInterface.java">interfaccia</a>
+La gui consiste di una pagina html, sono presenti bottoni di controllo del sistema e la griglia del gioco:  <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint3/conway26GuiHtml/src/main/resources/page/ConwayInOutPage.html">codice</a>.
+Il server <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint3/conway26GuiHtml/src/main/java/conway/io/IoJavalin.java">IoJavalin</a> gestisce le richieste http e websocket per il frontend.
+La classe <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint3/conway26GuiHtml/src/main/java/conway26appl/LifeGameInteraction.java">LifeGameInteraction</a> gestisce la comunicazione tra il frontend e lo stato interni ad esso, definiti nello sprint 1.
+Come discusso nei requisiti, dato che lo stato deve aggiornarsi continuamente, LifeGameInteraction e la pagina comunicano tramite websocket, contenuta in <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint3/conway26GuiHtml/src/main/java/conway26appl/OutInGuiInteraction.java">OutInGuiInteraction</a>.
 </pre>
 
 <h2>Problem analysis</h2>
 <pre>
-    <img src="./img/UML.jpg" alt="Diagramma uml del progetto">
+    <img src="./img/AnalisiDelProblema.png" alt="Analisi del problema">
 </pre>
 
 <h2>Test plans</h2>
 <pre>
-La cella deve essere inizialmente morta, lo stato morto è rappresentato da un booleano false, lo stato vivo è rappresentato da un booleano true: <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/test/CellTest.java">test</a>
-La griglia deve restiture la cella alla posizione specificata, se essa non è compresa in [0, dim) restituisce un'eccezione: <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/test/GridTest.java">test</a>
-Life deve restituire la nuova griglia dopo l'evoluzione secondo le regole del gioco: <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/test/LifeTest.java">test</a>
+Dato che l'applicazione è ora ad uno stato più completo, è possibile effettuare end-to-end testing per verificare il funzionamento dell'interazione tra le parti.
 </pre>
 
 <h2>Project</h2> 
@@ -62,10 +55,9 @@ Life deve restituire la nuova griglia dopo l'evoluzione secondo le regole del gi
 <h2>Testing</h2> 
 <pre></pre>
 
-<h2>Deployment</h2>
+<h2>Deployment</h2> 
 <pre>
-Il deployment è effettuato creando un'immagine docker attraverso il seguente file: <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint3/conway26GuiHtml/Dockerfile">Dockerfile</a>
-Successivamente l'immagine viene "eseguita" con il compose file in un network esterno: <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint3/conway26GuiHtml/compose.yaml">compose.yaml</a>
+Come richiesto dal cliente, l'applicazione è contenuta in un'immagine docker: <a href="https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM/blob/main/ConwayLife/Sprint3/conway26GuiHtml/Dockerfile">Dockerfile</a>.
 </pre> 
 
 <h2>Maintenance</h2> 

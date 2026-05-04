@@ -1,0 +1,98 @@
+System fireflysynch
+
+Event changeMode : changeMode(Mode, NewPeriod)
+Event obstacleClose : obstacleClose(Distance)
+Event obstacleFar : obstacleFar(Distance)
+
+Context ctxfirefly ip [host="localhost" port=8010]
+
+QActor firefly context ctxfirefly {
+	[#var Period = 0L
+	  var Phase = 0L#]
+	  
+    State s0 initial {
+    	[#Period = java.lang.Math.abs(java.util.Random().nextLong() % 5000L)#]
+    	[#Phase = java.lang.Math.abs(java.util.Random().nextLong() % Period)#]
+    	
+    	println("$name | New period: $Period, initial phase: $Phase")
+    }
+    Transition t0
+        whenTimeVar Phase -> flash
+
+     State flash {
+     	[#Phase = Period#]
+     	
+	    println("$name | Flash") color yellow
+	}
+	Transition t0
+	    whenTimeVar Phase -> flash
+	    whenEvent changeMode -> onChangeMode
+	
+	State onChangeMode {
+	    onMsg(changeMode : changeMode(Mode, NewPeriod)){
+	    	[#val newMode = payloadArg(0)#]
+	    	[#val newPeriod = java.lang.Long.parseLong(payloadArg(1))#]
+	    	if [#newMode.equals("synchronized")#] {
+	    		[#Period = newPeriod#]
+	    		[#Phase = Period#]
+	    	}
+	    	if [#newMode.equals("random")#] {
+	    		[#Period = java.lang.Math.abs(java.util.Random().nextLong() % 5000L)#]
+    			[#Phase = java.lang.Math.abs(java.util.Random().nextLong() % Period)#]
+	    	}
+	    	
+	    	println("$name | New period: $Period, initial phase: $Phase") color red
+	    }
+	}
+	Transition t0
+	    whenTimeVar Phase -> flash
+	    whenEvent changeMode -> onChangeMode
+}
+
+QActor fireflysystem context ctxfirefly {
+    State s0 initial {
+    }
+    Transition t0
+        whenEvent obstacleClose -> onObstacleClose
+		whenEvent obstacleFar -> onObstacleFar
+
+	State onObstacleClose {
+	    onMsg(obstacleClose : obstacleClose(Distance)){
+	    	emit changeMode : changeMode(synchronized, 1500)
+	    
+	    	println("Setting system in synchronized mode") color green
+	    }
+	}
+	Transition t0
+	    whenEvent obstacleClose -> onObstacleClose
+		whenEvent obstacleFar -> onObstacleFar
+
+	State onObstacleFar {
+	    onMsg(obstacleFar : obstacleFar(Distance)){
+	    	emit changeMode : changeMode(random, 0)
+	    	
+	    	println("Setting system in random mode") color green
+		}
+	}
+	Transition t0
+	    whenEvent obstacleClose -> onObstacleClose
+		whenEvent obstacleFar -> onObstacleFar
+}
+
+QActor sonarmock context ctxfirefly {
+	[#var RandomTimer = 10000L#]
+	State s0 initial {
+		[#RandomTimer = java.lang.Math.abs(java.util.Random().nextLong() % 10000L)#]
+	}
+	Transition t0
+		whenTimeVar RandomTimer -> changeMode
+	
+	State changeMode {
+		if [#java.util.Random().nextBoolean()#] {
+			emit obstacleClose  : obstacleClose(0)
+		} else {
+			emit obstacleFar : obstacleFar(100)
+		}
+	}
+	Goto s0
+}

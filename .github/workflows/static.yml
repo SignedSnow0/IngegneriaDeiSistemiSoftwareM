@@ -36,7 +36,8 @@ jobs:
       - name: Copy assets
         run: |
           cp -r ConwayLife docs/
-          cp -r lucciole docs/
+          cp -r firefly docs/
+          cp -r fireflysynch docs/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -1,0 +1,11 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:1.6.15
+    container_name: mosquitto
+    environment:
+      - MQTT_ALLOW_ANONYMOUS=true
+    ports:
+      - 1883:1883
+      - 9001:9001
+
+ 

@@ -1,0 +1,161 @@
+System firefly
+
+//mqttBroker "localhost" : 1883 eventTopic "flash"
+
+Event flash : flash(Time)
+
+Context ctxlucciolelocale ip [host="localhost" port=8010]
+
+QActor separatore context ctxlucciolelocale {
+	State s0 initial {
+		delay 5000
+		
+		println("")
+	}
+	Goto s0
+}
+
+QActor lucciola0 context ctxlucciolelocale {
+	[#var Period = 5000L
+	  var LastFlash = java.time.Instant.now()
+	  var Phase = Period#]
+	 
+	
+    State s0 initial {
+    	[#LastFlash = java.time.Instant.now()#]
+    	[#Phase -= java.util.Random().nextLong() % Period#]
+    }
+    Transition t0
+        whenTimeVar Phase -> flash
+
+     State flash {
+     	[#LastFlash = java.time.Instant.now()#]
+	    [#var NowStr = "'" + LastFlash.toString() + "'"#]
+	    [#Phase = Period#]
+	    
+	    println("$name | Flash") color yellow
+	    emit flash : flash($NowStr)
+	}
+	Transition t0
+	    whenTimeVar Phase -> flash
+	    whenEvent flash -> onFlash
+	
+	State onFlash {
+	    onMsg( flash : flash(Time)){
+	    	[#val timestamp = java.time.Instant.parse(payloadArg(0))#]
+	    	[#val dt = java.time.Duration.between(LastFlash, timestamp).toMillis()#]
+	    	[#Phase -= dt#]
+	    	[#LastFlash = java.time.Instant.now()#]
+	    	
+	    	[#val Adjust = (0.5 * Period * (1 - dt.toDouble() / Period).toDouble()).toLong()#]
+	        if [#Phase < Period / 2#] {
+	        	[#Phase -= Adjust#]
+	        } else {
+	        	[#Phase += Adjust#]
+	        }
+	        
+	        //println("$name | Adjust: $Adjust") color green
+	        
+	        [#Phase = if (Phase < 0) 0L else Phase#]
+	    }
+	}
+	Transition t0
+	    whenTimeVar Phase -> flash
+	    whenEvent flash -> onFlash 
+}
+
+QActor lucciola1 context ctxlucciolelocale {
+	[#var Period = 5000L
+	  var LastFlash = java.time.Instant.now()
+	  var Phase = Period#]
+	 
+	
+    State s0 initial {
+    	[#LastFlash = java.time.Instant.now()#]
+    	[#Phase -= java.util.Random().nextLong() % Period#]
+    }
+    Transition t0
+        whenTimeVar Phase -> flash
+
+     State flash {
+     	[#LastFlash = java.time.Instant.now()#]
+	    [#var NowStr = "'" + LastFlash.toString() + "'"#]
+	    [#Phase = Period#]
+	    
+	    println("$name | Flash") color yellow
+	    emit flash : flash($NowStr)
+	}
+	Transition t0
+	    whenTimeVar Phase -> flash
+	    whenEvent flash -> onFlash
+	
+	State onFlash {
+	    onMsg( flash : flash(Time)){
+	    	[#val dt = java.time.Duration.between(LastFlash, java.time.Instant.now()).toMillis()#]
+	    	[#Phase -= dt#]
+	    	[#LastFlash = java.time.Instant.now()#]
+	    	
+	        [#val Adjust = (0.5 * Period * (1 - dt.toDouble() / Period).toDouble()).toLong()#]
+	        if [#Phase < Period / 2#] {
+	        	[#Phase -= Adjust#]
+	        } else {
+	        	[#Phase += Adjust#]
+	        }
+	        
+	        //println("$name | Adjust: $Adjust") color green
+	        
+	        [#Phase = if (Phase < 0) 0L else Phase#]
+	    }
+	}
+	Transition t0
+	    whenTimeVar Phase -> flash
+	    whenEvent flash -> onFlash 
+}
+
+QActor lucciola2 context ctxlucciolelocale {
+	[#var Period = 5000L
+	  var LastFlash = java.time.Instant.now()
+	  var Phase = Period#]
+	 
+	
+    State s0 initial {
+    	[#LastFlash = java.time.Instant.now()#]
+    	[#Phase -= java.util.Random().nextLong() % Period#]
+    }
+    Transition t0
+        whenTimeVar Phase -> flash
+
+     State flash {
+     	[#LastFlash = java.time.Instant.now()#]
+	    [#var NowStr = "'" + LastFlash.toString() + "'"#]
+	    [#Phase = Period#]
+	    
+	    println("$name | Flash") color yellow
+	    emit flash : flash($NowStr)
+	}
+	Transition t0
+	    whenTimeVar Phase -> flash
+	    whenEvent flash -> onFlash
+	
+	State onFlash {
+	    onMsg( flash : flash(Time)){
+	    	[#val dt = java.time.Duration.between(LastFlash, java.time.Instant.now()).toMillis()#]
+	    	[#Phase -= dt#]
+	    	[#LastFlash = java.time.Instant.now()#]
+	    	
+	        [#val Adjust = (0.5 * Period * (1 - dt.toDouble() / Period).toDouble()).toLong()#]
+	        if [#Phase < Period / 2#] {
+	        	[#Phase -= Adjust#]
+	        } else {
+	        	[#Phase += Adjust#]
+	        }
+	        
+	        //println("$name | Adjust: $Adjust") color green
+	        
+	        [#Phase = if (Phase < 0) 0L else Phase#]
+	    }
+	}
+	Transition t0
+	    whenTimeVar Phase -> flash
+	    whenEvent flash -> onFlash 
+}

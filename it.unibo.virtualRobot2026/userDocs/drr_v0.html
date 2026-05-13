@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+    <title>DDR Robot</title>
+  </head>
+
+  <body>
+    <div id="top">
+      <h1>DDR Robot Controller Sprint1</h1>
+    </div>
+
+    <div class="body">
+      <h2>Introduction</h2>
+      L'obiettivo del progetto è quello di costruire un sistema che comandi un
+      DDR.
+
+      <h2>Requirements</h2>
+      <ul>
+        <li>
+          Costruire un sistema software che comandi un Differential Drive Robot
+          (DDR) in modo che, partendo dalla posizione iniziale HOME, il robot
+          percorra il perimetro di una stanza.
+        </li>
+        <li>
+          Il sistema deve utilizzare il radar, in particolare:
+          <ul>
+            <li>
+              Se il robot si sta muovendo e incontra un ostacolo a distanza
+              inferiore a <quote>DMIN</quote> allora si ferma
+            </li>
+            <li>
+              Se il robot è fermo davanti ad un ostacolo allora ruota su sè
+              stesso finchè non scompare
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <h2>Requirement analysis</h2>
+      <ul>
+        <li>
+          L'ambiente del robot è modellato con una griglia di celle, per
+          comodità del sistema una cella è della grandezza minima per contenere
+          il robot.
+          <pre>
+<code>
+record Stanza(int larghezza, int altezza) { }
+</code>
+</pre>
+        </li>
+        <li>
+          Per interagire con il radar è necessara un'entità wrapper che astrae
+          la funzionalità del radar già presente. Questo attore riceve
+          continuamente la distanza rilevata e al passaggio dalla soglia
+          <quote>DMIN</quote> emette opportuni eventi.
+          <pre>
+<code>
+QActor radar context ctxddr {
+    State s0 initial {
+        // rilevamento della distanza D (in cm)
+        if( D < DMIN ) {
+            emit radar : vicino(D)
+        }
+        else{
+            emit radar : lontano(D)
+        }
+    }
+}
+</code>
+</pre>
+          in alternativa, il radar potrebbe agire da semplice proxy, reinviando
+          la distanza rilevata, in modalità push o pull al sistema che ne fa
+          richiesta. Sarà allora compito del DDR stabilire se la distanza è
+          inferiore alla soglia o meno, e agire di conseguenza.
+        </li>
+        <li>
+          Infine è necessario un'ulteriore attore che comanda il DDR secondo i
+          requisiti specificati. Questo attore si occupa di muovere il DDR lungo
+          il perimetro della stanza, e di reagire agli eventi emessi dal radar.
+          <code>
+            <pre>
+QActor robot context ctxddr {
+    State s0 initial {
+        //Il sistema presuppone che inizialmente il robot sia in HOME e orientato verso la direzione da prendere inizialmente
+    }
+    Goto muovi
+
+    State s0 muovi {
+
+    }
+    Transition t0
+        whenEvent radar : vicino(D) -> ruota
+
+    State s0 ruota {
+    
+    }
+        Transition t0
+            whenEvent radar : lontano(D) -> muovi
+}
+</pre
+            >
+          </code>
+        </li>
+      </ul>
+
+      <h2>Problem analysis</h2>
+
+      <h2>Test plans</h2>
+
+      <h2>Project</h2>
+
+      <h2>Testing</h2>
+
+      <h2>Deployment</h2>
+      <p></p>
+
+      <h2>Maintenance</h2>
+
+      <br /><br />
+    </div>
+
+    <div
+      style="
+        background-color: rgba(86, 56, 253, 0.9);
+        width: 60%;
+        text-align: left;
+        color: white;
+      "
+    >
+      By Claudio Marchini email: claudio.marchini@studio.unibo.it,
+      <img src="./img/emiglio.png" alt="emiglio" width="15%" height="15%" />
+      https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM
+    </div>
+  </body>
+</html>

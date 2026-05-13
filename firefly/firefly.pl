@@ -1,14 +1,14 @@
 %====================================================================================
 % firefly description   
 %====================================================================================
-event( flash, flash(Time) ).
+event( start, start(RowsN,ColsN) ).
+event( flashlamp, flashlamp(NAME,TIME) ).
+dispatch( cellstate, cellstate(X,Y,COLOR) ). %commute cell state
 %====================================================================================
-context(ctxlucciolelocale, "localhost",  "TCP", "8010").
- qactor( separatore, ctxlucciolelocale, "it.unibo.separatore.Separatore").
- static(separatore).
-  qactor( lucciola0, ctxlucciolelocale, "it.unibo.lucciola0.Lucciola0").
- static(lucciola0).
-  qactor( lucciola1, ctxlucciolelocale, "it.unibo.lucciola1.Lucciola1").
- static(lucciola1).
-  qactor( lucciola2, ctxlucciolelocale, "it.unibo.lucciola2.Lucciola2").
- static(lucciola2).
+context(ctxfirefly, "localhost",  "TCP", "8460").
+context(ctxgrid, "127.0.0.1",  "TCP", "8050").
+ qactor( griddisplay, ctxgrid, "external").
+  qactor( creator, ctxfirefly, "it.unibo.creator.Creator").
+ static(creator).
+  qactor( firefly, ctxfirefly, "it.unibo.firefly.Firefly").
+dynamic(firefly). %%Oct2023 

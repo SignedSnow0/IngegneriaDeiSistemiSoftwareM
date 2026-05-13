@@ -38,6 +38,7 @@ jobs:
           cp -r ConwayLife docs/
           cp -r firefly docs/
           cp -r fireflysynch docs/
+          cp -r it.unibo.virtualRobot2026/ docs/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

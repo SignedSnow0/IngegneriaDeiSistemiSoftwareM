@@ -1,28 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-<head>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+    <title>FireflySynch</title>
+  </head>
 
-<link rel="stylesheet" type="text/css" href="css/mystyle.css">
-<!--
-    <script type="text/javascript" src="../css/issStyle.js"></script>
--->
-    
-</head>   
-<title>FireflySynch</title>
-</head>
+  <body>
+    <div id="top">
+      Time
+      <h1>FireflySynch</h1>
+    </div>
 
-<body>
-<div id="top">Time
-<h1>FireflySynch</h1>
-</div>  
+    <div class="body">
+      <h2>Introduction</h2>
+      Realizzazione in qak di una simulazione delle lucciole
 
-<div class="body">  
-
-<h2>Introduction</h2>
-Realizzazione in qak di una simulazione delle lucciole
-
-<h2>Requirements</h2>
-<pre>
+      <h2>Requirements</h2>
+      <pre>
 Costruire il simulatore di un sistema costituito da 3 lucciole. Inizialemente, le lucciole lampeggiamo ciascuna con una
 frequenza (costante) propria.
 <li>A) Dopo 10 secondi le lucciole devono lampeggiare in modo sincronizzato</li>
@@ -31,8 +25,8 @@ prefissata DMIN, le lucciole devoono lampeggiare in modo sincronizzato. Quando l
 (ri)supera DMIN, le lucciole tornano a lampeggiare in modo random</li>
 </pre>
 
-<h2>Requirement analysis</h2>
-<pre>
+      <h2>Requirement analysis</h2>
+      <pre>
 A seguito dell'analisi sono state individuate due entità fondamentali:
 <ul>
 <li>Le lucciole, che lampeggianoin maniera indipendente l'una dalle altre</li>
@@ -103,8 +97,8 @@ QActor fireflySystem context ctxfirefly {
 </code>
 </pre>
 
-<h2>Problem analysis</h2>
-<pre>
+      <h2>Problem analysis</h2>
+      <pre>
 L'interazione tra gli attori è completamente gestito ad eventi in quanto la comunicazione non ha nè bisogno di risposta nè tantomeno di sapere chi è il mittente o destinatario del messaggio.
 I messaggi del sonar passano attraverso l'orchestratore che si occupa di inoltrarli alle lucciole, in questo modo l'orchestratore si comporta come livello di astrazione intermedio garantendo
 la separazione delle reponsabilità e permette in futuro di modificare sia il sitema sonar che le lucciole in maniera trasparente per l'altro lato.
@@ -119,8 +113,8 @@ Context ctxfirefly ip [host="localhost" port=8010]
 </code>
 </pre>
 
-<h2>Test plans</h2>
-<pre>
+      <h2>Test plans</h2>
+      <pre>
 Come detto in precedenza il sonar è realizzato da un attore mock per facilitare il test iniziale del sistema:
 <code>
 QActor sonarmock context ctxfirefly {
@@ -143,38 +137,31 @@ QActor sonarmock context ctxfirefly {
 </code>
 </pre>
 
-<h2>Project</h2> 
-<pre></pre>
+      <h2>Project</h2>
+      <pre></pre>
 
-<h2>Testing</h2> 
-<pre>
-</pre>
+      <h2>Testing</h2>
+      <pre></pre>
 
-<h2>Deployment</h2> 
-<pre>
-</pre> 
+      <h2>Deployment</h2>
+      <pre></pre>
 
-<h2>Maintenance</h2> 
-<pre></pre>
+      <h2>Maintenance</h2>
+      <pre></pre>
+      <br /><br />
+    </div>
 
-<!-- USEFUL
-<table style="width:100%" border="1">
-<tr>
-<td style="width:50%">
-</td>
-<td></td>
-</tr>
-</table>
--->
-	      	
-<br/><br/> 	
-</div>  
-
-<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
-By Claudio Marchini email: claudio.marchini@studio.unibo.it, 
-<!-- <img src="./img/mbot-S.jpg" alt="mbot" width="15%" height="15%"> -->
-<img src="./img/emiglio.png" alt="emiglio" width="15%" height="15%">
-https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM 
-</div> 
-</body>
+    <div
+      style="
+        background-color: rgba(86, 56, 253, 0.9);
+        width: 60%;
+        text-align: left;
+        color: white;
+      "
+    >
+      By Claudio Marchini email: claudio.marchini@studio.unibo.it,
+      <img src="./img/emiglio.png" alt="emiglio" width="15%" height="15%" />
+      https://github.com/SignedSnow0/IngegneriaDeiSistemiSoftwareM
+    </div>
+  </body>
 </html>

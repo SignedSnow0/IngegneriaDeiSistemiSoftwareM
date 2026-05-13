@@ -1,8 +1,8 @@
-<configuration debug="true">
+<configuration debug="false">
   
     <!-- Appender per scrivere i log in un file -->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>logs/lucciole.log</file>
+        <file>logs/app_actorgrid.log</file>
         <append>true</append>
         <encoder>
              <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern> -->
